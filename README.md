@@ -12,7 +12,7 @@ A utility wich create a folder at ~/Repos with the name passed as the first comm
 
 ###### This will be followed if there are no SSH key files:
 8.  [ ] Create on github \(See extra steps\)
-9.  [ ] Add the remote \(git remote add origin https://github&#46;com/CodeIsNotEvil/CreateProjectFolder&#46;git\)
+9.  [ ] Add the remote \(git remote add origin https://github.com/CodeIsNotEvil/CreateProjectFolder.git\)
 10. [ ] Push it. \(git push -u origin master\)
 11. [ ] Login. \(to finalize the push action\)
 12. [ ] Open VsCode in the created folder.
@@ -24,11 +24,11 @@ A utility wich create a folder at ~/Repos with the name passed as the first comm
 11. [ ] Look for a matching key fingerprint. \(need more details\) 
 12. [ ] If there is a Matching Key close the browser. 
 13. [ ] If there is non Matching key add it to the list and close the browser \(Multiple steps requiered\)
-14. [ ] Add the remote \(git remote add origin git@github&#46;com:CodeIsNotEvil/CreateProjectFolder&#46;git\)
+14. [ ] Add the remote \(git remote add origin git@github.com:CodeIsNotEvil/CreateProjectFolder.git\)
 15. [ ] Push it. \(git push -u origin master\)
 16. [ ] Open VsCode in the created folder.
 
-###### These are the Substeps of Create on github
+###### These are the substeps of create on github
 9.  [ ] Open a Browser. \(Firefox gets implemented and tested first then Chrome\)
 10. [ ] Go to github.
 11. [ ] Login.
