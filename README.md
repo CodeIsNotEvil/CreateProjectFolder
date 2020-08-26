@@ -29,8 +29,8 @@ A utility wich create a folder at ~/Repos with the name passed as the first comm
 16. [ ] Open VsCode in the created folder.
 
 ###### These are the substeps of create on github
-9.  [ ] Open a Browser. \(Firefox gets implemented and tested first then Chrome\)
-10. [ ] Go to github.
-11. [ ] Login.
+9.  [x] Open a Browser. \(Firefox gets implemented and tested first then Chrome\)
+10. [x] Go to github.
+11. [x] Login.
 12. [ ] Create a new public project.
 13. [ ] name it like the Folder.
