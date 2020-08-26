@@ -3,7 +3,7 @@ A utility wich create a folder at ~/Repos with the name passed as the first comm
 
 #### This should going through the following steps:
 1.  [ ] Create a Folder at ~/Repos with the first argument as it's name.
-2.  [ ] Create a README&#46;md file inside the folder.
+2.  [x] Create a README&#46;md file inside the folder.
 3.  [ ] Check for user&#46;name and user&#46;email (for now  Only existens) 
 4.  [ ] Initializes a git reposetory inside the folder.
 5.  [ ] Stage the all files.
