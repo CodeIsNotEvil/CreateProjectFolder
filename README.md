@@ -2,10 +2,10 @@
 A utility wich create a folder at ~/repos (documents/repos windows) with the name passed as the first commandline argument. It also creates a git repository and put it on github.
 
 #### This should going through the following steps:
-1.  [ ] Create a Folder at ~/repos (documents/repos for windows) with the first argument as it's name.
+1.  [x] Create a Folder at ~/repos (documents/repos for windows) with the first argument as it's name.
 2.  [x] Create a README&#46;md file inside the folder.
 3.  [ ] Check for user&#46;name and user&#46;email (for now  Only existens) 
-4.  [ ] Initializes a git reposetory inside the folder.
+4.  [x] Initializes a git reposetory inside the folder.
 5.  [x] Stage the README file.
 6.  [x] Commit. \(commit -m "init commit"\)
 7.  [ ] Check if a SSH key is present "ls \-al ~/\.ssh" (looking if there are files other then knwon hosts)
