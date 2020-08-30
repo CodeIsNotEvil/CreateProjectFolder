@@ -20,16 +20,17 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 public class App {
 
     private static final Logger LOGGER = Logger.getLogger(App.class.getName());
-    public static void main(String[] args) {
+
+    public static void main(final String[] args) {
         LOGGER.setLevel(Level.INFO);
-        String folderPath = getOsSpecificFolderPath();
+        final String folderPath = getOsSpecificFolderPath();
         createFolder(folderPath, "test" /* args[1] */); // TODO change if finished
         // TODO check git user
         initGitInsideFolder(folderPath + "test" /* args[1] */);
 
-        WebDriver driver = new FirefoxDriver();
+        final WebDriver driver = new FirefoxDriver();
         loginToGithub(driver, "test");
-        //driver.close(); //TODO use if everything browser related is done
+        // driver.close(); //TODO use if everything browser related is done
     }
 
     /**
@@ -37,9 +38,9 @@ public class App {
      * 
      * @param path fullpath to the folder.
      */
-    private static void initGitInsideFolder(String path) {
+    private static void initGitInsideFolder(final String path) {
         try {
-            Git git = Git.init().setDirectory(new File(path)).call();
+            final Git git = Git.init().setDirectory(new File(path)).call();
             git.add().addFilepattern("README.md").call();
             git.commit().setMessage("Initial commit").call();
             LOGGER.log(Level.INFO, () -> "Git initialized and README.md commited");
@@ -71,60 +72,62 @@ public class App {
      * @param path path at wich the folder gets created
      * @param name name of folder
      */
-    public static void createFolder(String path, String name) {
-        File file = new File(path + name);
+    public static void createFolder(final String path, final String name) {
+        final File file = new File(path + name);
         // If the folder exits you can't create a new project with this name
         if (file.exists()) {
             LOGGER.log(Level.SEVERE, () -> "Folder already exists.\nExit program... " + path + name);
             System.exit(-1);
         }
-        //Create the folder
+        // Create the folder
         try {
-            if(file.mkdir()){
+            if (file.mkdir()) {
                 LOGGER.log(Level.INFO, () -> file.toString() + " got created.\n");
             } else {
                 LOGGER.log(Level.SEVERE, () -> "Failed to create " + file.toString() + "\n");
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
 
-        //Create the README.md file
+        // Create the README.md file
         try {
-            if(new File(path + name + "/README.md").createNewFile()){
+            if (new File(path + name + "/README.md").createNewFile()) {
                 LOGGER.log(Level.INFO, () -> "README.md created at" + path + name);
             } else {
                 LOGGER.log(Level.SEVERE, () -> "Could not create README.md at" + path + name);
             }
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
-        
+
     }
-    
+
     /**
      * Login to the Github.com Website at the webriver.
      * 
      * @param driver the driver wich is used
      * @throws InterruptedException
      */
-    public static void loginToGithub(WebDriver driver, String repositoryName) {
-        //Open github login page
+    public static void loginToGithub(final WebDriver driver, final String repositoryName) {
+        // Open github login page
         driver.get("https://github.com/login");
-        //Write login name into field
-        driver.findElement(By.id("login_field")).sendKeys("username");
-        //Wirte password into field
-        driver.findElement(By.id("password")).sendKeys("password");
-        //Submit login form
+        // Write login name into field
+        final CredentialsManager creds = new CredentialsManager();
+        driver.findElement(By.id("login_field")).sendKeys(creds.username);
+        // Wirte password into field
+        driver.findElement(By.id("password")).sendKeys(creds.password);
+        // Submit login form
         driver.findElement(By.name("commit")).click();
 
         driver.get("https://github.com/new");
         driver.findElement(By.id("repository_name")).sendKeys(repositoryName);
 
-        //before the button can get pressed wait for 3sec to recognize that the name is accepted
+        // before the button can get pressed wait for 3sec to recognize that the name is
+        // accepted
         try {
             Thread.sleep(3000);
-        } catch (InterruptedException e) {
+        } catch (final InterruptedException e) {
             LOGGER.log(Level.SEVERE, "Interrupted during sleep", e);
             Thread.currentThread().interrupt();
         }
