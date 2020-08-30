@@ -8,6 +8,9 @@ import java.util.logging.Logger;
 import org.apache.commons.exec.OS;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.StoredConfig;
+import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -20,12 +23,13 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 public class App {
 
     private static final Logger LOGGER = Logger.getLogger(App.class.getName());
+    private static final CredentialsManager CREDS = new CredentialsManager();
 
     public static void main(final String[] args) {
         LOGGER.setLevel(Level.INFO);
         final String folderPath = getOsSpecificFolderPath();
         createFolder(folderPath, "test" /* args[1] */); // TODO change if finished
-        // TODO check git user
+        checkGitConfig(folderPath + "test" /* args[1] */);
         initGitInsideFolder(folderPath + "test" /* args[1] */);
 
         final WebDriver driver = new FirefoxDriver();
@@ -45,7 +49,32 @@ public class App {
             git.commit().setMessage("Initial commit").call();
             LOGGER.log(Level.INFO, () -> "Git initialized and README.md commited");
         } catch (IllegalStateException | GitAPIException e) {
+            LOGGER.log(Level.SEVERE, "Failed to create local git repository.");
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Checks the git config with the help of the credentials manager
+     * @param path
+     */
+    private static void checkGitConfig(final String path) {
+        // Open an existing repository
+        try {
+            final Repository repo = new FileRepositoryBuilder().setGitDir(new File(path)).build();
+            final StoredConfig cfg = repo.getConfig();
+            final String name = cfg.getString("user", null, "name");
+            final String email = cfg.getString("user", null, "email");
+            if (!(name.equals(CREDS.username) && email.equals(CREDS.email))) {
+                LOGGER.severe("Email and/or name do not match with the git config.\nExeting...");
+                System.exit(0);
+                // TODO call the CredentialManager, let the user type in username and password.
+            }
+
+        } catch (final IOException e) {
+            LOGGER.severe("Could not read from git config.");
+            e.printStackTrace();
+            System.exit(0);
         }
     }
 
@@ -113,10 +142,10 @@ public class App {
         // Open github login page
         driver.get("https://github.com/login");
         // Write login name into field
-        final CredentialsManager creds = new CredentialsManager();
-        driver.findElement(By.id("login_field")).sendKeys(creds.username);
+
+        driver.findElement(By.id("login_field")).sendKeys(CREDS.username);
         // Wirte password into field
-        driver.findElement(By.id("password")).sendKeys(creds.password);
+        driver.findElement(By.id("password")).sendKeys(CREDS.password);
         // Submit login form
         driver.findElement(By.name("commit")).click();
 

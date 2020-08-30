@@ -9,8 +9,9 @@ import java.util.logging.Logger;
 
 public class CredentialsManager {
     private static final Logger LOGGER = Logger.getLogger(CredentialsManager.class.getName());
-    String username = null;
-    String password = null;
+    public String username = null;
+    public String password = null;
+    public String email = null;
 
     public CredentialsManager() {
         File credFile = new File(".credentials");
@@ -48,8 +49,8 @@ public class CredentialsManager {
      */
     private void writeToCredFile(File credFile) {
         try (FileWriter wirteToCredFile = new FileWriter(credFile)) {
-            wirteToCredFile.write(this.username + "\n" + this.password);
-            LOGGER.log(Level.INFO, "Username and password written to the credentials file.");
+            wirteToCredFile.write(this.username + "\n" + this.password + "\n" + this.email);
+            LOGGER.log(Level.INFO, "Username, password and email written to the credentials file.");
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Could not wirte to the credentials file");
             e.printStackTrace();
@@ -57,7 +58,7 @@ public class CredentialsManager {
     }
 
     /**
-     * Asks the user for github credentials.
+     * Asks the user for credentials. git config and github username must match.
      */
     private void askUserForCredentials() {
         LOGGER.log(Level.SEVERE, "Please enter your username: ");
@@ -65,6 +66,8 @@ public class CredentialsManager {
         this.username = stdin.nextLine();
         LOGGER.log(Level.SEVERE, "and your password: ");
         this.password = stdin.nextLine();
+        LOGGER.log(Level.SEVERE, "and your email: ");
+        this.email = stdin.nextLine();
         stdin.close();
     }
 
@@ -79,6 +82,12 @@ public class CredentialsManager {
                 this.username = read.nextLine();
                 if (read.hasNextLine()) {
                     this.password = read.nextLine();
+                    if (read.hasNextLine()) {
+                        this.email = read.nextLine();
+                    } else {
+                        // email missing
+                        askUserForCredentials();
+                    }
                 } else {
                     // password missing
                     askUserForCredentials();

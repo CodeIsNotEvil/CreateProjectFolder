@@ -4,7 +4,7 @@ A utility wich create a folder at ~/repos (documents/repos windows) with the nam
 #### This should going through the following steps:
 1.  [x] Create a Folder at ~/repos (documents/repos for windows) with the first argument as it's name.
 2.  [x] Create a README&#46;md file inside the folder.
-3.  [ ] Check for user&#46;name and user&#46;email (for now  Only existens) 
+3.  [x] Check for user&#46;name and user&#46;email. 
 4.  [x] Initializes a git reposetory inside the folder.
 5.  [x] Stage the README file.
 6.  [x] Commit. \(commit -m "init commit"\)
