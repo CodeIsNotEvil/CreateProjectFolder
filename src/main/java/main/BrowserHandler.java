@@ -37,7 +37,7 @@ public class BrowserHandler {
      * 
      * @param name The name of the Repository wich will be created.
      */
-    public void createGithubProject(final String name) {
+    public String createGithubProject(final String name) {
         this.driver.get("https://github.com/new");
         this.driver.findElement(By.id("repository_name")).sendKeys(name);
 
@@ -52,6 +52,8 @@ public class BrowserHandler {
         // Clicks the create project button
         this.driver.findElement(By.xpath("//button[@class=\"btn btn-primary first-in-line\"]")).click();
         LOGGER.log(Level.INFO, "Project on github.com created.");
+        // The remote url
+        return driver.getCurrentUrl();
     }
 
     /**

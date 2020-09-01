@@ -12,7 +12,7 @@ A utility wich create a folder at ~/repos (documents/repos windows) with the nam
 
 ###### This will be followed if there are no SSH key files:
 8.  [x] Create on github \(See extra steps\)
-9.  [ ] Add the remote \(git remote add origin https://github.com/CodeIsNotEvil/CreateProjectFolder.git\)
+9.  [x] Add the remote \(git remote add origin https://github.com/CodeIsNotEvil/CreateProjectFolder.git\)
 10. [ ] Push it. \(git push -u origin master\)
 11. [ ] Login. \(to finalize the push action\)
 12. [ ] Open VsCode in the created folder.

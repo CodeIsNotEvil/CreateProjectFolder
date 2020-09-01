@@ -15,19 +15,22 @@ public class App {
     public static void main(final String[] args) {
         LOGGER.setLevel(Level.INFO);
         String repositoryName = "test"; /* args[1] */ // TODO change if finished
-        //create Folder
-        FileHandler fileHandler = new FileHandler();   
+        // create Folder
+        FileHandler fileHandler = new FileHandler();
         fileHandler.createFolder(repositoryName);
 
-        //create local git repository
+        // create local git repository
         GitManager gitManager = new GitManager(fileHandler.getOsSpecificFolderPath() + repositoryName);
         gitManager.checkGitConfig();
         gitManager.initGitInsideFolder();
 
-        //create online git repository
+        // create online git repository
         BrowserHandler browserHandler = new BrowserHandler();
         browserHandler.loginToGithub();
-        browserHandler.createGithubProject(repositoryName);
+        String remoteUrl = browserHandler.createGithubProject(repositoryName);
+
+        // Add remote to local repo
+        gitManager.addRemote(remoteUrl);
     }
 
 }

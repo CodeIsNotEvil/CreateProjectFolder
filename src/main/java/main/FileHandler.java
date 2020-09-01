@@ -21,7 +21,7 @@ public class FileHandler {
         if (OS.isFamilyUnix()) {
             return "/home/" + System.getProperty("user.name") + "/repos/";
         }
-        
+
         LOGGER.log(Level.SEVERE, "OS is not suported.\nExit program..");
         System.exit(-1);
         return "";
